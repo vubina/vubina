@@ -9,5 +9,12 @@
   "keywords": [],
   "author": "",
   "publisher": "Navidtm",
-  "license": "MIT"
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.3"
+  }
 }
