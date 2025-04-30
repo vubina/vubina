@@ -1,6 +1,8 @@
 {
   "name": "@vubina/insights",
   "version": "0.0.1",
+  "license": "MIT",
+  "packageManager": "pnpm@10.7.1",
   "description": "",
   "author": "",
   "type": "module",
@@ -21,8 +23,6 @@
     "commander": "^13.1.0",
     "fast-glob": "^3.3.3"
   },
-  "license": "MIT",
-  "packageManager": "pnpm@10.7.1",
   "devDependencies": {
     "@types/babel-types": "^7.0.16"
   }
