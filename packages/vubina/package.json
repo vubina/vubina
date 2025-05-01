@@ -15,5 +15,8 @@
   },
   "main": "index.js",
   "scripts": {},
+  "dependencies": {
+    "@vubina/insights": "workspace:*"
+  },
   "keywords": []
 }
