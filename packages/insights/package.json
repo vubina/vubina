@@ -6,24 +6,24 @@
   "description": "",
   "author": "",
   "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "build": "tsup src/index.ts src/cli.ts --dts",
-    "dev": "bun src/index.ts --watch"
+  "exports": {
+    "./package.json": "./package.json",
+    ".": "./dist/index.mjs"
   },
-  "bin": {
-    "vubina-insights": "./dist/cli.js"
+  "types": "./dist/index.d.mts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "prepack": "unbuild"
   },
   "keywords": [],
   "dependencies": {
-    "@babel/traverse": "^7.27.1",
     "@vue/compiler-sfc": "^3.5.13",
     "chalk": "^5.4.1",
     "commander": "^13.1.0",
-    "fast-glob": "^3.3.3"
-  },
-  "devDependencies": {
-    "@types/babel-types": "^7.0.16"
+    "fast-glob": "^3.3.3",
+    "oxc-parser": "^0.67.0"
   }
 }
