@@ -15,6 +15,9 @@
   },
   "main": "index.js",
   "scripts": {},
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@vubina/insights": "workspace:*"
   },
