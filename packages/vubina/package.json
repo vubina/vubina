@@ -13,8 +13,18 @@
   "bugs": {
     "url": "https://github.com/tailwindlabs/tailwindcss/issues"
   },
-  "main": "index.js",
-  "scripts": {},
+  "exports": {
+    "./package.json": "./package.json",
+    ".": "./dist/index.mjs"
+  },
+  "types": "./dist/index.d.mts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "prepack": "unbuild"
+  },
   "publishConfig": {
     "access": "public"
   },
