@@ -3,7 +3,6 @@
   "version": "0.0.2",
   "type": "module",
   "license": "MIT",
-  "packageManager": "pnpm@10.7.1",
   "description": "",
   "repository": {
     "type": "git",
