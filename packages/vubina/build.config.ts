@@ -1,7 +1,6 @@
-import { defineBuildConfig } from 'unbuild'
+import { defineBuildConfig } from 'unbuild';
 
 export default defineBuildConfig({
-  declaration: true,
-  entries: ["./src/index"],
-
-})
+    declaration: true,
+    entries: ['./src/index']
+});

@@ -1,14 +1,14 @@
-import { parse } from '@vue/compiler-sfc'
-import { parseAsync } from 'oxc-parser'
+import { parse } from '@vue/compiler-sfc';
+import { parseAsync } from 'oxc-parser';
 
 export const parseVueFile = async (fileName: string, content: string) => {
-    const { descriptor, errors } = parse(content)
+    const { descriptor, errors } = parse(content);
 
     if (errors.length) {
-        throw new Error(`SFC parse errors: ${errors.map(e => e.message).join(', ')}`)
+        throw new Error(`SFC parse errors: ${errors.map(e => e.message).join(', ')}`);
     }
 
-    const scriptBlock = descriptor.scriptSetup || descriptor.script
+    const scriptBlock = descriptor.scriptSetup || descriptor.script;
 
     const result = {
         template: {
@@ -33,52 +33,49 @@ export const parseVueFile = async (fileName: string, content: string) => {
         })),
         customBlocks: descriptor.customBlocks.length,
         loc: content.split(/\r?\n/).length
-    }
+    };
 
     // script info
     if (scriptBlock) {
-
         const { program } = await parseAsync(fileName, scriptBlock.content, {
             lang: result.script.lang as any,
             sourceType: 'module'
-        })
+        });
 
         program.body.forEach(body => {
             switch (body.type) {
                 case 'ImportDeclaration':
-                    result.script.imports++
+                    result.script.imports++;
                     break;
 
                 case 'VariableDeclaration':
-                    const { declarations } = body
-
+                    const { declarations } = body;
 
                     declarations.forEach(declaration => {
-                        const { init } = declaration
+                        const { init } = declaration;
 
                         switch (init?.type) {
                             case 'CallExpression':
-                                const { callee } = init
+                                const { callee } = init;
                                 if (callee.type == 'Identifier') {
                                     switch (callee.name) {
                                         case 'defineModel':
-                                            result.script.models++
+                                            result.script.models++;
                                             break;
                                         case 'defineEmits':
-                                            result.script.emits++
+                                            result.script.emits++;
 
                                             break;
                                         case 'defineProps':
-                                            result.script.props++
+                                            result.script.props++;
 
                                             break;
 
                                         case 'ref':
-
-                                            result.script.refs++
+                                            result.script.refs++;
                                             break;
                                         case 'computed':
-                                            result.script.computeds++
+                                            result.script.computeds++;
 
                                             break;
 
@@ -91,11 +88,11 @@ export const parseVueFile = async (fileName: string, content: string) => {
                             default:
                                 break;
                         }
-                    })
+                    });
                     break;
 
                 case 'ExpressionStatement':
-                    const { expression } = body
+                    const { expression } = body;
 
                     switch (expression.type) {
                         case 'CallExpression':
@@ -103,11 +100,11 @@ export const parseVueFile = async (fileName: string, content: string) => {
 
                             switch (callee.type) {
                                 case 'Identifier':
-                                    const { name } = callee
+                                    const { name } = callee;
 
                                     switch (name) {
                                         case 'watch':
-                                            result.script.watches++
+                                            result.script.watches++;
                                             break;
 
                                         default:
@@ -124,8 +121,8 @@ export const parseVueFile = async (fileName: string, content: string) => {
                 default:
                     break;
             }
-        })
+        });
     }
 
-    return result
-}
+    return result;
+};
