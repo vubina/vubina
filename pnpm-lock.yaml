@@ -48,7 +48,7 @@ importers:
         specifier: workspace:*
         version: link:../insights
       vite:
-        specifier: ^6.3.5
+        specifier: ^6.0.0
         version: 6.3.5(@types/node@22.15.2)(jiti@2.4.2)
 
 packages:
@@ -2286,7 +2286,7 @@ snapshots:
       debug: 4.4.0
       es-module-lexer: 1.7.0
       pathe: 2.0.3
-      vite: 6.3.3(@types/node@22.15.2)(jiti@2.4.2)
+      vite: 6.3.5(@types/node@22.15.2)(jiti@2.4.2)
     transitivePeerDependencies:
       - '@types/node'
       - jiti
