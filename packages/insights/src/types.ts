@@ -1,4 +1,3 @@
-
 /**
  * Information about the <template> block
  */
@@ -42,8 +41,8 @@ export interface VueFileInsight {
     fileName: string;
     script?: ScriptInfo;
     customBlocks: number;
-    metadata: {
-        fileSize?: number;        // in bytes
-        lastModified?: Date;
+    meta: {
+        size: number;
+        modifiedAt: Date;
     };
 }
