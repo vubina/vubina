@@ -6,7 +6,9 @@
     "main": "index.js",
     "scripts": {
         "test": "vitest run",
-        "pretty": "prettier --write ."
+        "pretty": "prettier --write .",
+        "lint": "eslint",
+        "lint:fix": "eslint --fix"
     },
     "keywords": [],
     "author": "",
@@ -19,8 +21,11 @@
         "access": "public"
     },
     "devDependencies": {
+        "@antfu/eslint-config": "^4.13.0",
         "@types/node": "^22.15.2",
         "changelogen": "^0.6.1",
+        "eslint": "^9.26.0",
+        "eslint-plugin-vitest": "^0.5.4",
         "prettier": "^3.5.3",
         "typescript": "^5.8.3",
         "unbuild": "^3.5.0",
