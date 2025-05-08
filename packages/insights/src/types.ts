@@ -31,18 +31,30 @@ export interface ScriptInfo {
 }
 
 /**
- * Aggregated insight for one Vue file
+ * Information from Vue file
  */
-export interface VueFileInsight {
+export interface VueFile {
     path: string;
-    loc: number;
-    template: TemplateInfo;
-    styles: StyleInfo[];
+    content: string;
     fileName: string;
-    script?: ScriptInfo;
-    customBlocks: number;
     meta: {
         size: number;
         modifiedAt: Date;
     };
 }
+
+/**
+ * Aggregated insight for one Vue file
+ */
+export interface VueFileInfo {
+    loc: number;
+    template: TemplateInfo;
+    styles: StyleInfo[];
+    script?: ScriptInfo;
+    customBlocks: number;
+}
+
+/**
+ * Information extented from VueFileInfo and VueFile
+ */
+export interface VueFileInsights extends VueFileInfo, VueFile {}
