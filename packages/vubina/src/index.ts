@@ -1,5 +1,6 @@
+import type { Plugin } from 'vite';
+import process from 'node:process';
 import { getInsights } from '@vubina/insights';
-import { Plugin } from 'vite';
 
 export default (rootDir = process.cwd()): Plugin => {
     return {
@@ -8,7 +9,8 @@ export default (rootDir = process.cwd()): Plugin => {
 
         buildStart: async () => {
             const result = await getInsights(rootDir);
+            // eslint-disable-next-line no-console
             console.log(result);
-        }
+        },
     };
 };
