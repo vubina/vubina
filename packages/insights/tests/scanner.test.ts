@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
+import path from 'node:path';
+import { describe, expect, it } from 'vitest';
 import { scanVueFiles } from '../src/scanner';
-import path from 'path';
 
 describe('scanner', () => {
     it('should find vue files in the given directory', async () => {
