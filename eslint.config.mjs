@@ -13,10 +13,9 @@ export default antfu(
         },
 
         // TypeScript and Vue are autodetected, you can also explicitly enable them:
-        typescript: {
-            tsconfigPath: 'tsconfig.base.json',
-        },
+        typescript: true,
         vue: true,
+        pnpm: true,
 
         // Disable jsonc and yaml support
         jsonc: false,
