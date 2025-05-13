@@ -29,6 +29,7 @@
         "taze": "catalog:",
         "typescript": "catalog:",
         "unbuild": "catalog:",
-        "vitest": "catalog:"
+        "vitest": "catalog:",
+        "vue": "catalog:"
     }
 }
