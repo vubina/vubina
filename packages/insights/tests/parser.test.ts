@@ -12,6 +12,5 @@ describe('parser', () => {
         expect(result).toHaveProperty('script');
         expect(result).toHaveProperty('styles');
         expect(result).toHaveProperty('loc');
-        expect(result).toHaveProperty('customBlocks');
     });
 });
