@@ -1,7 +1,10 @@
-import type { VueFileInsights } from './types';
+import type { VueFileInfo } from './parser';
+import type { VueFile } from './scanner';
 import process from 'node:process';
 import { parseVueFile } from './parser';
 import { loadVueFiles } from './scanner';
+
+export interface VueFileInsights extends VueFileInfo, VueFile {}
 
 /**
  * load all Vue files under the given directory and return insights
@@ -12,12 +15,11 @@ export async function getInsights(rootDir: string = process.cwd()): Promise<VueF
 
     const insights = await Promise.all(
         files.map<Promise<VueFileInsights>>(async ({ path, content, meta, fileName }) => {
-            const { customBlocks, loc, script, styles, template } = await parseVueFile(fileName, content);
+            const { loc, script, styles, template } = await parseVueFile(fileName, content);
 
             return {
                 fileName,
                 path,
-                customBlocks,
                 loc,
                 script,
                 styles,
