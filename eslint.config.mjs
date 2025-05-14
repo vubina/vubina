@@ -20,9 +20,14 @@ export default antfu(
         // Disable jsonc and yaml support
         jsonc: false,
         yaml: false,
+        test: true,
+
+        ignores: [
+            '**/tests/**/*.vue',
+        ],
     },
     {
-        files: ['tests/**'], // or any other pattern
+        files: ['*.test.ts'], // or any other pattern
         plugins: {
             vitest,
         },
