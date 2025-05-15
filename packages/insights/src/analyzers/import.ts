@@ -1,18 +1,12 @@
-import type { ImportDeclaration, ImportDeclarationSpecifier, ImportOrExportKind } from 'oxc-parser';
+import type { ImportDeclaration, ImportDeclarationSpecifier, Span } from 'oxc-parser';
+import { normalizeSpace } from '../helpers/normalizeSpace';
 
 export interface ImportInfo {
     content: string;
     start: number;
-    source: {
-        start: number;
-        end: number;
-    };
-    specifiers: Array<{
-        type: ImportDeclarationSpecifier['type'];
-        start: number;
-        end: number;
-    }>;
-    importKind: ImportOrExportKind | undefined;
+    source: Span;
+    specifiers: Array<Pick<ImportDeclarationSpecifier, 'type'> & Span>;
+    importKind: ImportDeclaration['importKind'];
 }
 
 /**
@@ -25,20 +19,15 @@ export interface ImportInfo {
  */
 export function analyzeImport(importNode: ImportDeclaration, content: string): ImportInfo {
     const { start, end, importKind, source, specifiers } = importNode;
-    console.log(content);
 
     return {
         content: content.slice(start, end),
         importKind,
         start,
-        source: {
-            start: source.start,
-            end: source.end,
-        },
+        source: normalizeSpace(source, start),
         specifiers: specifiers.map(specifier => ({
             type: specifier.type,
-            start: specifier.start,
-            end: specifier.end,
+            ...normalizeSpace(specifier, start),
         })),
     };
 }
