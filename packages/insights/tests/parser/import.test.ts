@@ -1,6 +1,5 @@
 import { parseSync } from 'oxc-parser';
 import { analyzeImport } from 'packages/insights/src/analyzers/import';
-import { sliceContent } from 'packages/insights/src/helpers/sliceContent';
 import { parseVueFile } from 'packages/insights/src/parser';
 import { describe, expect, it } from 'vitest';
 
@@ -15,10 +14,14 @@ describe('analyzeImport - Vue <script setup> import parser', () => {
         const { script } = await parseVueFile('test.vue', content);
 
         if (script) {
-            const { imports: parsedImports } = script;
+            const { imports: parsedImports, content } = script;
+
+            expect(parsedImports.length).toBe(imports.length);
 
             for (const [i, parsedImport] of parsedImports.entries()) {
-                expect(parsedImport.content).toBe(imports[i]);
+                const { start, end } = parsedImport.content;
+                const importContent = content.slice(start, end);
+                expect(importContent).toBe(imports[i]);
             }
         }
     });
@@ -49,12 +52,15 @@ describe('analyzeImport - Vue <script setup> import parser', () => {
             }).program.body.filter(node => node.type === 'ImportDeclaration'),
         );
 
+        expect(importNodes.length).toBe(expected.length);
+
         for (const [i, importNode] of importNodes.entries()) {
-            const { content, importKind, source, specifiers } = analyzeImport(importNode, imports[i]);
+            const { content, importKind, source, specifiers } = analyzeImport(importNode);
 
-            const parsedSourceText = sliceContent(content, source);
-            const parsedSpecifiers = specifiers.map(spec => sliceContent(content, spec));
+            const parsedSourceText = imports[i].slice(source.start, source.end);
+            const parsedSpecifiers = specifiers.map(spec => imports[i].slice(spec.start, spec.end));
 
+            expect(imports[i]).toBe(imports[i].slice(content.start, content.end));
             expect(parsedSourceText).toBe(expected[i].source);
             expect(parsedSpecifiers).toEqual(expected[i].specifiers);
             expect(importKind).toBe(expected[i].importKind);

@@ -1,12 +1,25 @@
-import type { ImportDeclaration, ImportDeclarationSpecifier, Span } from 'oxc-parser';
-import { normalizeSpace } from '../helpers/normalizeSpace';
+import type { ImportDeclaration, ImportDeclarationSpecifier, Span, Statement } from 'oxc-parser';
 
 export interface ImportInfo {
-    content: string;
-    start: number;
+    content: Span;
     source: Span;
     specifiers: Array<Pick<ImportDeclarationSpecifier, 'type'> & Span>;
     importKind: ImportDeclaration['importKind'];
+}
+
+/**
+ * extract imports from script block
+ *
+ * @param body
+ * @returns list of import `ImportInfo` object
+ */
+export function extractImports(body: Statement[]): ImportInfo[] {
+    const analyzedImports: ImportInfo[] = [];
+    for (const statement of body) {
+        if (statement.type === 'ImportDeclaration')
+            analyzedImports.push(analyzeImport(statement));
+    }
+    return analyzedImports;
 }
 
 /**
@@ -14,20 +27,22 @@ export interface ImportInfo {
  * including raw content, source positions, specifiers, and import kind.
  *
  * @param importNode - The `ImportDeclaration` node parsed from the AST.
- * @param content - The content string containing the import statement.
  * @returns An `ImportInfo` object containing metadata about the import.
  */
-export function analyzeImport(importNode: ImportDeclaration, content: string): ImportInfo {
+export function analyzeImport(importNode: ImportDeclaration): ImportInfo {
     const { start, end, importKind, source, specifiers } = importNode;
 
     return {
-        content: content.slice(start, end),
         importKind,
-        start,
-        source: normalizeSpace(source, start),
-        specifiers: specifiers.map(specifier => ({
-            type: specifier.type,
-            ...normalizeSpace(specifier, start),
+        content: {
+            start,
+            end,
+        },
+        source,
+        specifiers: specifiers.map(({ type, start, end }) => ({
+            type,
+            start,
+            end,
         })),
     };
 }
