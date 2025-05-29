@@ -1,44 +1,89 @@
-import type { Argument, CallExpression, Span, VariableDeclarator } from 'oxc-parser';
-import { normalizeSpace } from '../helpers/normalizeSpace';
-import { sliceContent } from '../helpers/sliceContent';
+import type { CallExpression, Directive, Span, Statement, VariableDeclarator } from 'oxc-parser';
 
 export interface WatchInfo {
     type: 'watch';
-    content: string;
+    content: Span;
     config?: Span;
     callback: Span;
     source: Span;
 }
 
-export function AnalyzeWatch(content: string, args: Argument[], start: number): WatchInfo {
-    const source = args[0];
-    const callbackFn = args[1];
-    const config: Argument | undefined = args[2];
+export function extractWatchers(body: (Statement | Directive)[]): WatchInfo[] {
+    const watchers: WatchInfo[] = [];
+
+    for (const statement of body) {
+        if (statement.type === 'VariableDeclaration') {
+            for (const declaration of statement.declarations) {
+                if (declaration.init?.type === 'CallExpression') {
+                    const { callee } = declaration.init;
+
+                    if (callee.type === 'Identifier' && callee.name === 'watch') {
+                        watchers.push(analyzeWatchDecleration(declaration));
+                    }
+                }
+            }
+        }
+        else if (statement.type === 'ExpressionStatement' && statement.expression.type === 'CallExpression') {
+            const { callee } = statement.expression;
+
+            if (callee.type === 'Identifier' && callee.name === 'watch') {
+                watchers.push(analyzeWatchExpression(statement.expression));
+            }
+        }
+    }
+
+    return watchers;
+}
+
+export function analyzeWatchExpression(expression: CallExpression): WatchInfo {
+    const { arguments: args, start, end } = expression;
+    const [source, callback, config] = args;
 
     return {
-        content,
-        callback: normalizeSpace(callbackFn, start),
-        config: config
-            ? normalizeSpace(config, start)
-            : undefined,
-        source: normalizeSpace(source, start),
         type: 'watch',
+        content: { start, end },
+        source: {
+            start: source.start,
+            end: source.end,
+        },
+        callback: {
+            start: callback.start,
+            end: callback.end,
+        },
+        config: config
+            ? {
+                    start: config.start,
+                    end: config.end,
+                }
+            : undefined,
     };
 }
 
-export function AnalyzeWatchExpression(expression: CallExpression, content: string): WatchInfo {
-    const { arguments: args, start } = expression;
-    const watchContent = sliceContent(content, expression);
-
-    return AnalyzeWatch(watchContent, args, start);
-}
-
-export function AnalyzeWatchDecleration(declaration: VariableDeclarator, content: string): WatchInfo {
-    const { init, start } = declaration;
-    const watchContent = sliceContent(content, declaration);
+export function analyzeWatchDecleration(declaration: VariableDeclarator): WatchInfo {
+    const { init, start, end } = declaration;
 
     if (init?.type === 'CallExpression') {
-        return AnalyzeWatch(watchContent, init.arguments, start);
+        const { arguments: args } = init;
+        const [source, callback, config] = args;
+
+        return {
+            type: 'watch',
+            content: { start, end },
+            source: {
+                start: source.start,
+                end: source.end,
+            },
+            callback: {
+                start: callback.start,
+                end: callback.end,
+            },
+            config: config
+                ? {
+                        start: config.start,
+                        end: config.end,
+                    }
+                : undefined,
+        };
     }
     else {
         throw new Error('Error');
