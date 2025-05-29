@@ -1,0 +1,20 @@
+{
+  "name": "docs",
+  "scripts": {
+    "dev": "vitepress --port 3333 --open",
+    "build": "nr cli-table && nr prefetch && vitepress build",
+    "cli-table": "tsx .vitepress/scripts/cli-generator.ts",
+    "build-no-prefetch": "vitepress build",
+    "serve": "vitepress serve",
+    "preview-https": "pnpm run build && serve .vitepress/dist",
+    "preview-https-no-prefetch": "pnpm run build-no-prefetch && serve .vitepress/dist",
+    "prefetch": "tsx .vitepress/scripts/fetch-avatars.ts",
+    "generate-pwa-icons": "pwa-assets-generator"
+  },
+  "dependencies": {
+    "vue": "catalog:dev"
+  },
+  "devDependencies": {
+    "unocss": "catalog:docs"
+  }
+}

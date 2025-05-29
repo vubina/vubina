@@ -22,10 +22,10 @@
     },
     "keywords": [],
     "dependencies": {
-        "@vue/compiler-sfc": "catalog:",
-        "chalk": "catalog:",
-        "commander": "catalog:",
-        "oxc-parser": "catalog:",
-        "tinyglobby": "catalog:"
+        "@vue/compiler-sfc": "catalog:prod",
+        "chalk": "catalog:prod",
+        "commander": "catalog:prod",
+        "oxc-parser": "catalog:prod",
+        "tinyglobby": "catalog:prod"
     }
 }

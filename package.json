@@ -21,15 +21,16 @@
         "access": "public"
     },
     "devDependencies": {
-        "@antfu/eslint-config": "catalog:",
-        "@types/node": "catalog:",
-        "@vitest/eslint-plugin": "catalog:",
-        "changelogen": "catalog:",
-        "eslint": "catalog:",
-        "taze": "catalog:",
-        "typescript": "catalog:",
-        "unbuild": "catalog:",
-        "vitest": "catalog:",
-        "vue": "catalog:"
+        "@antfu/eslint-config": "catalog:dev",
+        "@types/node": "catalog:dev",
+        "@vitest/eslint-plugin": "catalog:dev",
+        "changelogen": "catalog:dev",
+        "eslint": "catalog:dev",
+        "taze": "catalog:dev",
+        "typescript": "catalog:dev",
+        "unbuild": "catalog:dev",
+        "unocss": "catalog:docs",
+        "vitest": "catalog:dev",
+        "vue": "catalog:dev"
     }
 }
