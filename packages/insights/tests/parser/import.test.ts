@@ -1,6 +1,6 @@
 import { parseSync } from 'oxc-parser';
-import { analyzeImport } from 'packages/insights/src/analyzers/import';
 import { parseVueFile } from 'packages/insights/src/parser';
+import { analyzeImport } from 'packages/insights/src/parser/js/import';
 import { describe, expect, it } from 'vitest';
 
 describe('analyzeImport - Vue <script setup> import parser', () => {

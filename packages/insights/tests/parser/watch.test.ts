@@ -1,6 +1,6 @@
 import { parseSync } from 'oxc-parser';
-import { extractWatchers } from 'packages/insights/src/analyzers/watch';
 import { parseVueFile } from 'packages/insights/src/parser';
+import { extractWatchers } from 'packages/insights/src/parser/vue/watch';
 import { describe, expect, it } from 'vitest';
 import { sliceContent } from '../utils';
 

@@ -1,9 +1,9 @@
 import type { SFCScriptBlock } from '@vue/compiler-sfc';
-import type { ImportInfo } from '../analyzers/import';
-import type { WatchInfo } from '../analyzers/watch';
+import type { ImportInfo } from '../js/import';
+import type { WatchInfo } from '../vue/watch';
 import { parseAsync } from 'oxc-parser';
-import { extractImports } from '../analyzers/import';
-import { extractWatchers } from '../analyzers/watch';
+import { extractImports } from '../js/import';
+import { extractWatchers } from '../vue/watch';
 
 export interface ScriptInfo {
     content: string;

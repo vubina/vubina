@@ -1,10 +1,10 @@
-import type { ScriptInfo } from './parsers/scripts';
-import type { StyleInfo } from './parsers/styles';
-import type { TemplateInfo } from './parsers/templates';
+import type { ScriptInfo } from './sfc/scripts';
+import type { StyleInfo } from './sfc/styles';
+import type { TemplateInfo } from './sfc/templates';
 import { parse } from '@vue/compiler-sfc';
-import { parseScript } from './parsers/scripts';
-import { parseStyle } from './parsers/styles';
-import { parseVueTemplate } from './parsers/templates';
+import { parseScript } from './sfc/scripts';
+import { parseStyle } from './sfc/styles';
+import { parseVueTemplate } from './sfc/templates';
 
 /**
  * Aggregated insight for one Vue file
