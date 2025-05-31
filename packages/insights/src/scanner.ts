@@ -1,7 +1,19 @@
-import type { VueFile } from './types';
 import { readFile, stat } from 'node:fs/promises';
 import { normalize } from 'node:path';
 import { glob } from 'tinyglobby';
+
+/**
+ * Information from Vue file
+ */
+export interface VueFile {
+    path: string;
+    content: string;
+    fileName: string;
+    meta: {
+        size: number;
+        modifiedAt: Date;
+    };
+}
 
 /**
  * Scan for all .vue files under a given root directory, excluding node_modules and dist
