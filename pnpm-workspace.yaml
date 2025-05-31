@@ -24,3 +24,7 @@ catalogs:
 
   docs:
     unocss: ^66.1.2
+    vitepress: ^1.6.3
+    vitepress-plugin-group-icons: ^1.5.5
+    vitepress-plugin-llms: ^1.3.4
+    vitepress-plugin-tabs: ^0.7.1
