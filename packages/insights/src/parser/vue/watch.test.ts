@@ -1,8 +1,8 @@
 import { parseSync } from 'oxc-parser';
 import { parseVueFile } from 'packages/insights/src/parser';
 import { extractWatchers } from 'packages/insights/src/parser/vue/watch';
+import { sliceContent } from 'packages/insights/tests/utils';
 import { describe, expect, it } from 'vitest';
-import { sliceContent } from '../utils';
 
 describe('analyzeWatch - Vue <script setup> watch parser', () => {
     const ref1 = 'ref1';
