@@ -4,7 +4,7 @@ import { extractWatchers } from 'packages/insights/src/parser/vue/watch';
 import { sliceContent } from 'packages/insights/tests/utils';
 import { describe, expect, it } from 'vitest';
 
-describe('analyzeWatch - Vue <script setup> watch parser', () => {
+describe('parseWatch - Vue <script setup> watch parser', () => {
     const ref1 = 'ref1';
     const ref2 = 'ref2';
 

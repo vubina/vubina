@@ -14,22 +14,22 @@ export interface ImportInfo {
  * @returns list of import `ImportInfo` object
  */
 export function extractImports(body: Statement[]): ImportInfo[] {
-    const analyzedImports: ImportInfo[] = [];
+    const parsedImports: ImportInfo[] = [];
     for (const statement of body) {
         if (statement.type === 'ImportDeclaration')
-            analyzedImports.push(analyzeImport(statement));
+            parsedImports.push(parseImport(statement));
     }
-    return analyzedImports;
+    return parsedImports;
 }
 
 /**
- * Analyzes an `ImportDeclaration`
+ * parses an `ImportDeclaration`
  * including raw content, source positions, specifiers, and import kind.
  *
  * @param importNode - The `ImportDeclaration` node parsed from the AST.
  * @returns An `ImportInfo` object containing metadata about the import.
  */
-export function analyzeImport(importNode: ImportDeclaration): ImportInfo {
+export function parseImport(importNode: ImportDeclaration): ImportInfo {
     const { start, end, importKind, source, specifiers } = importNode;
 
     return {

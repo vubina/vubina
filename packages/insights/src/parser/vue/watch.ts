@@ -9,7 +9,7 @@ export interface WatchInfo {
 }
 
 export function extractWatchers(body: (Statement | Directive)[]): WatchInfo[] {
-    const watchers: WatchInfo[] = [];
+    const parsedWatchers: WatchInfo[] = [];
 
     for (const statement of body) {
         if (statement.type === 'VariableDeclaration') {
@@ -18,7 +18,7 @@ export function extractWatchers(body: (Statement | Directive)[]): WatchInfo[] {
                     const { callee } = declaration.init;
 
                     if (callee.type === 'Identifier' && callee.name === 'watch') {
-                        watchers.push(analyzeWatchDecleration(declaration));
+                        parsedWatchers.push(parseWatchDecleration(declaration));
                     }
                 }
             }
@@ -27,15 +27,15 @@ export function extractWatchers(body: (Statement | Directive)[]): WatchInfo[] {
             const { callee } = statement.expression;
 
             if (callee.type === 'Identifier' && callee.name === 'watch') {
-                watchers.push(analyzeWatchExpression(statement.expression));
+                parsedWatchers.push(parseWatchExpression(statement.expression));
             }
         }
     }
 
-    return watchers;
+    return parsedWatchers;
 }
 
-export function analyzeWatchExpression(expression: CallExpression): WatchInfo {
+export function parseWatchExpression(expression: CallExpression): WatchInfo {
     const { arguments: args, start, end } = expression;
     const [source, callback, config] = args;
 
@@ -59,7 +59,7 @@ export function analyzeWatchExpression(expression: CallExpression): WatchInfo {
     };
 }
 
-export function analyzeWatchDecleration(declaration: VariableDeclarator): WatchInfo {
+export function parseWatchDecleration(declaration: VariableDeclarator): WatchInfo {
     const { init, start, end } = declaration;
 
     if (init?.type === 'CallExpression') {

@@ -1,9 +1,9 @@
 import { parseSync } from 'oxc-parser';
 import { parseVueFile } from 'packages/insights/src/parser';
-import { analyzeImport } from 'packages/insights/src/parser/js/import';
+import { parseImport } from 'packages/insights/src/parser/js/import';
 import { describe, expect, it } from 'vitest';
 
-describe('analyzeImport - Vue <script setup> import parser', () => {
+describe('parseImport - Vue <script setup> import parser', () => {
     it('should extract full import lines from script block', async () => {
         const imports = [
             `import { computed, ref, watch } from 'vue';`,
@@ -55,7 +55,7 @@ describe('analyzeImport - Vue <script setup> import parser', () => {
         expect(importNodes.length).toBe(expected.length);
 
         for (const [i, importNode] of importNodes.entries()) {
-            const { content, importKind, source, specifiers } = analyzeImport(importNode);
+            const { content, importKind, source, specifiers } = parseImport(importNode);
 
             const parsedSourceText = imports[i].slice(source.start, source.end);
             const parsedSpecifiers = specifiers.map(spec => imports[i].slice(spec.start, spec.end));
