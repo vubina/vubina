@@ -1,6 +1,6 @@
 {
     "name": "@vubina/root",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "type": "module",
     "packageManager": "pnpm@10.10.0",
     "main": "index.js",
@@ -8,7 +8,8 @@
         "test": "vitest run",
         "lint": "eslint",
         "lint:fix": "eslint --fix",
-        "taze": "taze -r"
+        "taze": "taze -r",
+        "release": "./scripts/release.sh"
     },
     "keywords": [],
     "author": "",
